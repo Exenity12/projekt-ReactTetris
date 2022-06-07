@@ -1,0 +1,20 @@
+.MainAuthorizationBar {
+    position: absolute;
+    top: 30%;
+    left: 45%;
+    width: 250px;
+    height: 150px;
+    background-color: gray
+}
+
+.FormAuthorization{
+    margin: 5px;
+}
+
+.ButtonAuthorization{
+    margin: 10px;
+}
+
+.DivNamePole{
+    margin: 2px;
+}

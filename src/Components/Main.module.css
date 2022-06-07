@@ -1,0 +1,13 @@
+.MainHeader {
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    width: 150px;
+    height: 150px;
+    background-color: gray
+}
+
+.MainHeaderItem{
+    font-weight: bold;
+    margin: 20px;
+}
