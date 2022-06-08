@@ -69,7 +69,7 @@ const Settings = () => {
 
     const setInformationOfNewElement = useCallback(
         () => {
-            let activeFigure = getRandomIntInclusive(0, 4);
+            let activeFigure = getRandomIntInclusive(0, 6);
             let positionActive, directionActive, shapeActive;
             if(activeFigure === 0){
                 positionActive = [{top: 0, left: 7}, {top: 0, left: 8}, {top: 0, left: 9}, {top: 0, left: 10}];
@@ -134,7 +134,6 @@ const Settings = () => {
 
             switch(tetrisState.shapeActiveFigure) {
                 case "snake":
-                    
                     if(tetrisState.directionActiveFigure === 0){
 
                         newAarraySnakeBody[0].top += -1;
@@ -143,210 +142,186 @@ const Settings = () => {
                         newAarraySnakeBody[2].left += -1;
                         newAarraySnakeBody[3].top += 2;
                         newAarraySnakeBody[3].left += -2;
-
                     }
-
                     if(tetrisState.directionActiveFigure === 1){
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[0].left += -1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[2].left += 1;
                         newAarraySnakeBody[3].top += -2;
                         newAarraySnakeBody[3].left += 2;
-
                     }
-
                     if(tetrisState.directionActiveFigure === 2){
-
                         newAarraySnakeBody[0].top += -1;
                         newAarraySnakeBody[0].left += 1;
                         newAarraySnakeBody[2].top += 1;
                         newAarraySnakeBody[2].left += -1;
                         newAarraySnakeBody[3].top += 2;
                         newAarraySnakeBody[3].left += -2;
-
                     }
-
                     if(tetrisState.directionActiveFigure === 3){
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[0].left += -1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[2].left += 1;
                         newAarraySnakeBody[3].top += -2;
                         newAarraySnakeBody[3].left += 2;
-
                     }
-
-
-
                     break;
-
                 case "pyramid":
-     
                     if(tetrisState.directionActiveFigure === 0){
-
-
                         newAarraySnakeBody[0].top += -1;
                         newAarraySnakeBody[0].left += 1;
                         newAarraySnakeBody[2].top += 1;
                         newAarraySnakeBody[2].left += -1;
                         newAarraySnakeBody[3].top += -1;
                         newAarraySnakeBody[3].left += -1;
-
                     }
-
                     if(tetrisState.directionActiveFigure === 1){
-
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[0].left += 1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[2].left += -1;
                         newAarraySnakeBody[3].top += -1;
                         newAarraySnakeBody[3].left += 1;
-
-          
                     }
-
                     if(tetrisState.directionActiveFigure === 2){
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[0].left += -1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[2].left += 1;
                         newAarraySnakeBody[3].top += 1;
                         newAarraySnakeBody[3].left += 1;
-
-
-        
-
                     }
-
                     if(tetrisState.directionActiveFigure === 3){
-
                         newAarraySnakeBody[0].top += -1;
                         newAarraySnakeBody[0].left += -1;
                         newAarraySnakeBody[2].top += 1;
                         newAarraySnakeBody[2].left += 1;
                         newAarraySnakeBody[3].top += 1;
                         newAarraySnakeBody[3].left += -1;
-
-       
-
                     }
-
                     break;
-
-                    case "lightning":
-
-
-       
-                        if(tetrisState.directionActiveFigure === 0){
-    
-    
-                            newAarraySnakeBody[0].top += -1;
-                            newAarraySnakeBody[0].left += 1;
-                            newAarraySnakeBody[2].top += -1;
-                            newAarraySnakeBody[2].left += -1;
-                            newAarraySnakeBody[3].left += -2;
-    
-       
-                        }
-
-                        if(tetrisState.directionActiveFigure === 1){
-    
-    
-                            newAarraySnakeBody[0].top += 1;
-                            newAarraySnakeBody[0].left += -1;
-                            newAarraySnakeBody[2].top += 1;
-                            newAarraySnakeBody[2].left += 1;
-                            newAarraySnakeBody[3].left += 2;
-    
-     
-                        }
-                        if(tetrisState.directionActiveFigure === 2){
-    
-    
-                            newAarraySnakeBody[0].top += -1;
-                            newAarraySnakeBody[0].left += 1;
-                            newAarraySnakeBody[2].top += -1;
-                            newAarraySnakeBody[2].left += -1;
-                            newAarraySnakeBody[3].left += -2;
-    
-    
-                        }
-
-                        if(tetrisState.directionActiveFigure === 3){
-    
-    
-                            newAarraySnakeBody[0].top += 1;
-                            newAarraySnakeBody[0].left += -1;
-                            newAarraySnakeBody[2].top += 1;
-                            newAarraySnakeBody[2].left += 1;
-                            newAarraySnakeBody[3].left += 2;
-    
-    
-                        }
-
+                case "lightning":
+                    if(tetrisState.directionActiveFigure === 0){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].left += -2;
+                    }
+                    if(tetrisState.directionActiveFigure === 1){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].left += 2;
+                    }
+                    if(tetrisState.directionActiveFigure === 2){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].left += -2;
+                    }
+                    if(tetrisState.directionActiveFigure === 3){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].left += 2;
+                    }
                     break;
-
-
                 case "reverseLightning":
-                    
-     
                     if(tetrisState.directionActiveFigure === 0){
-
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[1].left += 1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[3].top += -2;
                         newAarraySnakeBody[3].left += 1;
-
-  
                     }
-
-
                     if(tetrisState.directionActiveFigure === 1){
-
-
                         newAarraySnakeBody[0].top += -1;
                         newAarraySnakeBody[1].left += -1;
                         newAarraySnakeBody[2].top += 1;
                         newAarraySnakeBody[3].top += 2;
                         newAarraySnakeBody[3].left += -1;
-
                     }
-
                     if(tetrisState.directionActiveFigure === 2){
-
-
                         newAarraySnakeBody[0].top += 1;
                         newAarraySnakeBody[1].left += 1;
                         newAarraySnakeBody[2].top += -1;
                         newAarraySnakeBody[3].top += -2;
                         newAarraySnakeBody[3].left += 1;
-
-                       
                     }
-
-
                     if(tetrisState.directionActiveFigure === 3){
-
-
                         newAarraySnakeBody[0].top += -1;
                         newAarraySnakeBody[1].left += -1;
                         newAarraySnakeBody[2].top += 1;
                         newAarraySnakeBody[3].top += 2;
                         newAarraySnakeBody[3].left += -1;
-
- 
                     }
-
                     break;
-
+                case "horse":
+                    if(tetrisState.directionActiveFigure === 0){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].left += -2;
+                    }
+                    if(tetrisState.directionActiveFigure === 1){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += -2;
+                    }
+                    if(tetrisState.directionActiveFigure === 2){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].left += 2;
+                    }
+                    if(tetrisState.directionActiveFigure === 3){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += 2;
+                    }
+                    break;
+                case "reverseHorse":
+                    if(tetrisState.directionActiveFigure === 0){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += -2;
+                    }
+                    if(tetrisState.directionActiveFigure === 1){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].left += 2;
+                    }
+                    if(tetrisState.directionActiveFigure === 2){
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += 2;
+                    }
+                    if(tetrisState.directionActiveFigure === 3){
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].left += -2;
+                    }
+                    break;
                 default: return;
             };
 
