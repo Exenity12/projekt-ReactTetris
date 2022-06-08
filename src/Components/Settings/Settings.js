@@ -1,6 +1,5 @@
 import { React, useCallback, useState } from 'react';
 import './Settings.css';
-import TetrisTurn from './TetrisTurn.js'
 import { useEffect } from "react"
 
 const getRandomIntInclusive = (min, max) => {
@@ -28,9 +27,49 @@ const Settings = () => {
         shapeActiveFigure: "snake",
     });
 
+    let counterScoreTableUp = () => {
+        setCounterNumber(prev => prev + 1);
+    };
+
+    const renderTable = useCallback(
+        () => {
+            var variableAlternateString = 0;
+            let arr = [];
+            while(variableAlternateString < tableSquareVertSize) {
+                let variableCreateItemInString = 0;
+                let arrString = [];
+                while(variableCreateItemInString < tableSquareHorizonSize){
+                    const isInFall = coordinatesAllFallElements.find((item) => {
+                        return (item.top === variableAlternateString && item.left === variableCreateItemInString);
+                    });
+                    const isInActive = tetrisState.positionActiveElement.find((item) => {
+                        return (item.top === variableAlternateString && item.left === variableCreateItemInString);
+                    });
+                    const className = (isInFall || isInActive) ? "activeElement" : "noneActiveElement";
+                    const element = (
+                        <div className={className} id={`id_${variableAlternateString}_${variableCreateItemInString}`}></div>
+                    );
+                    arrString.push(element);
+                    variableCreateItemInString++;
+                };
+                const stringElement = <div className='string'>{arrString}</div>;
+                arr.push(stringElement);
+                variableAlternateString++;
+            };
+            return arr;
+        }, [tetrisState]
+    )
+
+    const startGame = useCallback(
+        () => {
+            setInformationOfNewElement();
+            console.log("Start!");
+        }, [tetrisState]
+    );
+
     const setInformationOfNewElement = useCallback(
         () => {
-            let activeFigure = getRandomIntInclusive(0, 6);
+            let activeFigure = getRandomIntInclusive(0, 4);
             let positionActive, directionActive, shapeActive;
             if(activeFigure === 0){
                 positionActive = [{top: 0, left: 7}, {top: 0, left: 8}, {top: 0, left: 9}, {top: 0, left: 10}];
@@ -73,54 +112,260 @@ const Settings = () => {
                 directionActiveFigure: directionActive,
                 shapeActiveFigure: shapeActive,
             });
-            // let counter = document.querySelector('.counter');
-            // setCounterNumber(prev => prev++)
-            // counter.innerHTML = counterNumber;
         }, []
     );
 
 
-    const renderTable = useCallback(
+    let turnActiveFigure = useCallback(
         () => {
-            var variableAlternateString = 0;
-            let arr = [];
-            while(variableAlternateString < tableSquareVertSize) {
-                let variableCreateItemInString = 0;
-                let arrString = [];
-                while(variableCreateItemInString < tableSquareHorizonSize){
-                    const isInFall = coordinatesAllFallElements.find((item) => {
-                        return (item.top === variableAlternateString && item.left === variableCreateItemInString);
-                    });
-                    const isInActive = tetrisState.positionActiveElement.find((item) => {
-                        return (item.top === variableAlternateString && item.left === variableCreateItemInString);
-                    });
-                    const className = (isInFall || isInActive) ? "activeElement" : "noneActiveElement";
-                    const element = (
-                        <div className={className} id={`id_${variableAlternateString}_${variableCreateItemInString}`}></div>
-                    );
-                    arrString.push(element);
-                    variableCreateItemInString++;
-                };
-                const stringElement = <div className='string'>{arrString}</div>;
-                arr.push(stringElement);
-                variableAlternateString++;
+            let direct = 0
+            direct = direct + tetrisState.directionActiveFigure;
+            if(direct === 3){
+                direct = direct -= 4;
+            }
+            setTetrisState((prev) => ({
+                ...prev,
+                directionActiveFigure: direct + 1,
+            }))
+
+            console.log(tetrisState.positionActiveElement)
+
+            let newAarraySnakeBody = tetrisState.positionActiveElement;
+
+            switch(tetrisState.shapeActiveFigure) {
+                case "snake":
+                    
+                    if(tetrisState.directionActiveFigure === 0){
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += 2;
+                        newAarraySnakeBody[3].left += -2;
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 1){
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += -2;
+                        newAarraySnakeBody[3].left += 2;
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 2){
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += 2;
+                        newAarraySnakeBody[3].left += -2;
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 3){
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += -2;
+                        newAarraySnakeBody[3].left += 2;
+
+                    }
+
+
+
+                    break;
+
+                case "pyramid":
+     
+                    if(tetrisState.directionActiveFigure === 0){
+
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += -1;
+                        newAarraySnakeBody[3].left += -1;
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 1){
+
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += -1;
+                        newAarraySnakeBody[3].top += -1;
+                        newAarraySnakeBody[3].left += 1;
+
+          
+                    }
+
+                    if(tetrisState.directionActiveFigure === 2){
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += 1;
+                        newAarraySnakeBody[3].left += 1;
+
+
+        
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 3){
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[0].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[2].left += 1;
+                        newAarraySnakeBody[3].top += 1;
+                        newAarraySnakeBody[3].left += -1;
+
+       
+
+                    }
+
+                    break;
+
+                    case "lightning":
+
+
+       
+                        if(tetrisState.directionActiveFigure === 0){
+    
+    
+                            newAarraySnakeBody[0].top += -1;
+                            newAarraySnakeBody[0].left += 1;
+                            newAarraySnakeBody[2].top += -1;
+                            newAarraySnakeBody[2].left += -1;
+                            newAarraySnakeBody[3].left += -2;
+    
+       
+                        }
+
+                        if(tetrisState.directionActiveFigure === 1){
+    
+    
+                            newAarraySnakeBody[0].top += 1;
+                            newAarraySnakeBody[0].left += -1;
+                            newAarraySnakeBody[2].top += 1;
+                            newAarraySnakeBody[2].left += 1;
+                            newAarraySnakeBody[3].left += 2;
+    
+     
+                        }
+                        if(tetrisState.directionActiveFigure === 2){
+    
+    
+                            newAarraySnakeBody[0].top += -1;
+                            newAarraySnakeBody[0].left += 1;
+                            newAarraySnakeBody[2].top += -1;
+                            newAarraySnakeBody[2].left += -1;
+                            newAarraySnakeBody[3].left += -2;
+    
+    
+                        }
+
+                        if(tetrisState.directionActiveFigure === 3){
+    
+    
+                            newAarraySnakeBody[0].top += 1;
+                            newAarraySnakeBody[0].left += -1;
+                            newAarraySnakeBody[2].top += 1;
+                            newAarraySnakeBody[2].left += 1;
+                            newAarraySnakeBody[3].left += 2;
+    
+    
+                        }
+
+                    break;
+
+
+                case "reverseLightning":
+                    
+     
+                    if(tetrisState.directionActiveFigure === 0){
+
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[1].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[3].top += -2;
+                        newAarraySnakeBody[3].left += 1;
+
+  
+                    }
+
+
+                    if(tetrisState.directionActiveFigure === 1){
+
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[1].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[3].top += 2;
+                        newAarraySnakeBody[3].left += -1;
+
+                    }
+
+                    if(tetrisState.directionActiveFigure === 2){
+
+
+                        newAarraySnakeBody[0].top += 1;
+                        newAarraySnakeBody[1].left += 1;
+                        newAarraySnakeBody[2].top += -1;
+                        newAarraySnakeBody[3].top += -2;
+                        newAarraySnakeBody[3].left += 1;
+
+                       
+                    }
+
+
+                    if(tetrisState.directionActiveFigure === 3){
+
+
+                        newAarraySnakeBody[0].top += -1;
+                        newAarraySnakeBody[1].left += -1;
+                        newAarraySnakeBody[2].top += 1;
+                        newAarraySnakeBody[3].top += 2;
+                        newAarraySnakeBody[3].left += -1;
+
+ 
+                    }
+
+                    break;
+
+                default: return;
             };
-            return arr;
-        }, [tetrisState]
+
+        }
     )
 
 
-    const startGame = useCallback(
-        () => {
-            setInformationOfNewElement();
-            console.log("Start!");
-            // global.timer = setInterval(moveActiveFigure, 500);
-        }, [tetrisState]
-    );
+
+
+
+
+
+
+
 
 
     let moveActiveFigure = useCallback(
         () => {
+            fallFigure();
             setfallIsTrue(false)
             setTetrisState(
                 (tetrisState) => ({
@@ -130,10 +375,8 @@ const Settings = () => {
                     }),
                 })
             );
-            nextElement();
+            checkDropOnTable();
             checkDropOnAnotherElement();
-            fallFigure();
-            // global.timer = setTimeout(moveActiveFigure, 500);
         }
     )
 
@@ -167,7 +410,7 @@ const Settings = () => {
         }
     )
 
-    let nextElement = useCallback(
+    let checkDropOnTable = useCallback(
         () => {
             if(tetrisState.positionActiveElement.find((item) => item.top === tableSquareHorizonSize)){
                 setCoordinatesAllFallElements(
@@ -208,57 +451,66 @@ const Settings = () => {
     )
 
     let moveDown = useCallback(
-        // () => {
-        //     let t = [];
-        //     let downIsTrue = false;
-        //     tetrisState.positionActiveElement.forEach((u) => t.push(u.top))
-        //     t.sort(function (a, b) {
-        //         return a - b;
-        //     })
-        //     moveDownIsTrue = t[3];
-        //     setTetrisState(
-        //         (tetrisState) => ({
-        //             ...tetrisState,
-        //             positionActiveElement: tetrisState.positionActiveElement.map((item) => {
-        //                 return {top: item.top++, left: item.left};
-        //             }),
-        //         })
-        //     );
-        // }
+        () => {
+            // let t = [];
+            // let downIsTrue = false;
+            // tetrisState.positionActiveElement.forEach((u) => t.push(u.top))
+            // t.sort(function (a, b) {
+            //     return a - b;
+            // })
+            // moveDownIsTrue = t[3];
+            // setTetrisState(
+            //     (tetrisState) => ({
+            //         ...tetrisState,
+            //         positionActiveElement: tetrisState.positionActiveElement.map((item) => {
+            //             return {top: item.top++, left: item.left};
+            //         }),
+            //     })
+            // );
+        }
     )
-
-
 
 
     let fallFigure = useCallback(
         () => {
             let numberString = tableSquareVertSize;
+            let newArr = [];
             while(numberString > 0){
                 let newArray = coordinatesAllFallElements.filter(item => item.top === numberString);
-                console.log(newArray)
                 if(newArray.length >= tableSquareHorizonSize){
                     console.log(numberString, " удалить эту строку");
+                    counterScoreTableUp();
                     let numberElement = 0;
+                    newArr = coordinatesAllFallElements;
                     while(numberElement < coordinatesAllFallElements.length){
                         if(coordinatesAllFallElements[numberElement].top === numberString){
-                            console.log(numberElement, coordinatesAllFallElements.length)
-                            setCoordinatesAllFallElements(
-                                [
-                                    ...coordinatesAllFallElements.slice(0, numberElement),
-                                    ...coordinatesAllFallElements.slice(numberElement + 1),
-                                ]
-                            );
+                            newArr.splice(numberElement, 1)
+                            numberElement--;
                         };
                         numberElement++;
                     };
+                    setCoordinatesAllFallElements(newArr);
+                    helperWhileDeleteString(numberString);
+                    numberString++;
                 };
                 numberString--;
             };
         }
     )
 
-
-
+    let helperWhileDeleteString = useCallback(
+        (numberString) => {
+            let newNuumberString = 0;
+            let newArrayDeleteString = coordinatesAllFallElements;
+            while(newNuumberString < coordinatesAllFallElements.length){
+                if(newArrayDeleteString[newNuumberString].top < numberString){
+                    newArrayDeleteString[newNuumberString].top++;
+                };
+                newNuumberString++;
+                setCoordinatesAllFallElements(newArrayDeleteString);
+            }
+        }
+    )
 
     const keyUpHandler = function(event){
         switch(event.code) {
@@ -266,7 +518,7 @@ const Settings = () => {
                 moveLeft();
                 break;
             case "ArrowUp":
-                TetrisTurn();
+                turnActiveFigure();
                 break;
             case "ArrowRight":
                 moveRight();
@@ -289,13 +541,13 @@ const Settings = () => {
     return (
      <div>
        <div className="table">{renderTable()}</div>
-       <div className="counter">0</div>
+       <div className="counter">{counterNumber}</div>
 
         <div className="allButtons">
             <button className="button" onClick={startGame}>Старт</button>
             <button className="button-left" onClick={moveLeft}>Лево</button>
             <button className="button-right" onClick={moveRight}>Право</button>
-            <button className="button-turn" onClick={TetrisTurn}>Turn</button>
+            <button className="button-turn" onClick={turnActiveFigure}>Turn</button>
             <button className="button-down" onClick={moveDown}>Вниз</button>
             <button className="button-clear" onClick={moveActiveFigure}>Next move</button>
         </div>
