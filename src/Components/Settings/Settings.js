@@ -14,6 +14,7 @@ const tableSquareVertSize = 15;
 
 let timer = "";
 let moveDownIsTrue = "";
+let ckeckGameOverPass = false;
 
 const Settings = () => {
 
@@ -128,7 +129,6 @@ const Settings = () => {
                 directionActiveFigure: direct + 1,
             }))
 
-            console.log(tetrisState.positionActiveElement)
 
             let newAarraySnakeBody = tetrisState.positionActiveElement;
 
@@ -325,21 +325,27 @@ const Settings = () => {
                 default: return;
             };
 
-        }
+        }, [tetrisState]
     )
 
-
-
-
-
-
-
-
-
+    let checkGameOver = () => {
+        tetrisState.positionActiveElement.forEach((active) => {
+            coordinatesAllFallElements.forEach((fall) => {
+                if(active.top === fall.top && active.left === fall.left){
+                    console.log("game over");
+                    ckeckGameOverPass = true;
+                };
+            });
+        });
+    }
 
 
     let moveActiveFigure = useCallback(
         () => {
+            checkGameOver();
+            if(ckeckGameOverPass){
+                return;
+            };
             fallFigure();
             setfallIsTrue(false)
             setTetrisState(
@@ -401,6 +407,17 @@ const Settings = () => {
 
     const moveRight = useCallback(
         () => {
+            let moveRightATable = false;
+            console.log(tetrisState.positionActiveElement)
+            tetrisState.positionActiveElement.forEach((item) => {
+                if(item.left === 13){
+                    console.log("true")
+                    moveRightATable = true;
+                };
+            });
+            if(moveRightATable){
+                return;
+            };
             setTetrisState(
                 (tetrisState) => ({
                     ...tetrisState,
@@ -409,11 +426,22 @@ const Settings = () => {
                     }),
                 })
             );
-        }, []
+        }, [tetrisState]
     );
 
     const moveLeft = useCallback(
         () => {
+            let moveLeftATable = false;
+            console.log(tetrisState.positionActiveElement)
+            tetrisState.positionActiveElement.forEach((item) => {
+                if(item.left === 0){
+                    console.log("true")
+                    moveLeftATable = true;
+                };
+            });
+            if(moveLeftATable){
+                return;
+            };
             setTetrisState(
                 (tetrisState) => ({
                     ...tetrisState,
@@ -422,7 +450,7 @@ const Settings = () => {
                     }),
                 })
             );
-        }
+        }, [tetrisState]
     )
 
     let moveDown = useCallback(
